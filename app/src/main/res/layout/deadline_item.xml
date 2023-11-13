@@ -54,7 +54,7 @@
     </LinearLayout>
 
     <com.example.deadline.DeadlineList.DeadlineProgressBar
-        android:id="@+id/progressBar"
+        android:id="@+id/deadlineProgressBar"
         android:layout_width="10dp"
         android:background="#FF6200EE"
         android:layout_height="match_parent"
