@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deadline.ProjectDeadlineApplication
-import com.example.deadline.databinding.DeadlineItemBinding
+import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
 import com.example.deadline.viewmodels.ProjectDeadlineViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class DeadlineRecycleViewFragment: Fragment() {
 
-    private var _binding: DeadlineItemBinding? = null
+    private var _binding: FragmentDeadlineListRecyclerViewBinding? = null
 
     private val binding get() = _binding!!
 
@@ -36,7 +36,7 @@ class DeadlineRecycleViewFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DeadlineItemBinding.inflate(inflater, container, false)
+        _binding = FragmentDeadlineListRecyclerViewBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }
