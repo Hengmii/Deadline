@@ -15,7 +15,7 @@ import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
 import com.example.deadline.viewmodels.ProjectDeadlineViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
 
-class DeadlineRecycleViewFragment: Fragment() {
+class DeadlineRecycleViewFragment : Fragment() {
 
     private var _binding: FragmentDeadlineListRecyclerViewBinding? = null
 

@@ -11,8 +11,10 @@ fun Greeting() {
     val currentHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
     val allEmojis = EmojiManager.getAll().toList()
     val randomEmoji = allEmojis[Random.nextInt(allEmojis.size)].unicode
-    Text(when (currentHour) {
-        in 0 .. 20 -> "$randomEmoji Hello"
-        else -> "🌙Good night!"
-    })
+    Text(
+        when (currentHour) {
+            in 0..20 -> "$randomEmoji Hello"
+            else -> "🌙Good night!"
+        }
+    )
 }

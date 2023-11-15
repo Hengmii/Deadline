@@ -22,7 +22,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 2,
             title = "Deadline 2",
@@ -31,7 +31,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 3,
             title = "Deadline 3",
@@ -40,7 +40,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 4,
             title = "Deadline 4",
@@ -49,7 +49,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 5,
             title = "Deadline 5",
@@ -58,7 +58,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 6,
             title = "Deadline 6",
@@ -67,7 +67,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 7,
             title = "Deadline 7",
@@ -76,7 +76,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 8,
             title = "Deadline 8",
@@ -85,7 +85,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.TODO,
-            ),
+        ),
         Deadline(
             id = 9,
             title = "Deadline 9",
@@ -94,7 +94,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.DONE,
-            ),
+        ),
         Deadline(
             id = 10,
             title = "Deadline 10",
@@ -103,7 +103,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.DONE,
-            ),
+        ),
         Deadline(
             id = 11,
             title = "Deadline 11",
@@ -112,7 +112,7 @@ fun deadlineList(): List<Deadline> {
             color = Color(0xFFBB86FC),
             notification = Notification(),
             state = DeadlineState.DONE,
-            ),
-        )
+        ),
+    )
 
 }
