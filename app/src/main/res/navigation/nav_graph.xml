@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/deadlineRecycleViewFragment">
+
+    <fragment
+        android:id="@+id/addDeadlineFragment"
+        android:name="com.example.deadline.AddDeadlineFragment"
+        android:label="AddDeadlineFragment"
+        tools:layout="@layout/add_deadline_fragment"
+        />
+    <fragment
+        android:id="@+id/deadlineRecycleViewFragment"
+        android:name="com.example.deadline.DeadlineList.DeadlineRecycleViewFragment"
+        android:label="DeadlineRecycleViewFragment"
+        tools:layout="@layout/fragment_deadline_list_recycler_view"
+        >
+        <action
+            android:id="@+id/action_deadlineRecycleViewFragment_to_addDeadlineFragment2"
+            app:destination="@id/addDeadlineFragment" />
+    </fragment>
+</navigation>
