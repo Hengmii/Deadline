@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/deadline_item_background"
     android:layout_margin="8dp"
-    android:padding="16dp"
-    >
+    android:background="@drawable/deadline_item_background"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/deadline_title"
@@ -56,11 +55,11 @@
     <com.example.deadline.DeadlineList.DeadlineProgressBar
         android:id="@+id/deadlineProgressBar"
         android:layout_width="3dp"
-        android:background="#FF6200EE"
         android:layout_height="0dp"
+        android:background="#FF6200EE"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
