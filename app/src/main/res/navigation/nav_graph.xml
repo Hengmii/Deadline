@@ -16,7 +16,7 @@
         android:label="DeadlineRecycleViewFragment"
         tools:layout="@layout/fragment_deadline_list_recycler_view">
         <action
-            android:id="@+id/action_deadlineRecycleViewFragment_to_addDeadlineFragment2"
+            android:id="@+id/action_deadlineRecycleViewFragment_to_addDeadlineFragment"
             app:destination="@id/addDeadlineFragment" />
     </fragment>
 </navigation>
