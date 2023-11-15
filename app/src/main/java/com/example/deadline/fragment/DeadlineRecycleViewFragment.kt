@@ -1,24 +1,19 @@
-package com.example.deadline.DeadlineList
+package com.example.deadline.fragment
 
 import DeadlineAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.deadline.Greeting
+import com.example.deadline.fragment.Greeting
 import com.example.deadline.ProjectDeadlineApplication
-import com.example.deadline.R
 import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
 import com.example.deadline.viewmodels.ProjectDeadlineViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class DeadlineRecycleViewFragment: Fragment() {
 

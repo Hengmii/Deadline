@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/addDeadlineFragment"
-        android:name="com.example.deadline.AddDeadlineFragment"
+        android:name="com.example.deadline.fragment.AddDeadlineFragment"
         android:label="AddDeadlineFragment"
         tools:layout="@layout/add_deadline_fragment"
         />
     <fragment
         android:id="@+id/deadlineRecycleViewFragment"
-        android:name="com.example.deadline.DeadlineList.DeadlineRecycleViewFragment"
+        android:name="com.example.deadline.fragment.DeadlineRecycleViewFragment"
         android:label="DeadlineRecycleViewFragment"
         tools:layout="@layout/fragment_deadline_list_recycler_view"
         >

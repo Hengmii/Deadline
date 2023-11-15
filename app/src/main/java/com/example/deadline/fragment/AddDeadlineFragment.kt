@@ -1,4 +1,4 @@
-package com.example.deadline
+package com.example.deadline.fragment
 
 import androidx.fragment.app.Fragment
 
