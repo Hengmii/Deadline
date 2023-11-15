@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
     <TableLayout
         android:layout_width="409dp"
         android:layout_height="653dp"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="77dp">
+        tools:layout_editor_absoluteY="77dp"
+        tools:ignore="MissingConstraints">
 
         <TableRow
             android:layout_width="match_parent"
@@ -42,14 +40,14 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-        <TextView
-            android:layout_height="wrap_content"
-            android:text="Deadline"
-            android:layout_marginStart="24dp"
-            ></TextView>
-        >
-            />
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_height="wrap_content"
+                android:text="Deadline"
+                android:layout_marginStart="24dp"
+                ></TextView>
+            >
+        </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
