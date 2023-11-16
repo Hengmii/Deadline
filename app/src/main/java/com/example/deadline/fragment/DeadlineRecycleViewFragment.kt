@@ -66,6 +66,7 @@ class DeadlineRecycleViewFragment : Fragment() {
     }
 
     private fun navigateToAddDeadlineFragment() {
-        findNavController().navigate(R.id.action_deadlineRecycleViewFragment_to_addDeadlineFragment)
+        val action = DeadlineRecycleViewFragmentDirections.actionDeadlineRecycleViewFragmentToAddDeadlineFragment()
+        findNavController().navigate(action)
     }
 }
