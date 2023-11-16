@@ -45,6 +45,10 @@ class AddDeadlineFragment : Fragment() {
             showTimePicker()
         }
 
+//        val addNotificationButton = view.findViewById<Button>(R.id.add_notification_button)
+//        addNotificationButton.setOnClickListener {
+//            showNotificationDialog()
+//        }
     }
 
     private fun showTimePicker() {
