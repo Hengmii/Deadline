@@ -12,35 +12,43 @@ import android.widget.CalendarView
 import androidx.compose.ui.res.dimensionResource
 import androidx.fragment.app.Fragment
 import com.example.deadline.R
+import com.example.deadline.databinding.AddDeadlineFragmentBinding
+import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
 import java.util.Calendar
 
 class AddDeadlineFragment : Fragment() {
+
+    private var _binding: AddDeadlineFragmentBinding? = null
+
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.add_deadline_fragment, container, false)
+        _binding = AddDeadlineFragmentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val showDeadlineCalendarButton = view.findViewById<Button>(R.id.showDeadlineCalendarButton)
+        val showDeadlineCalendarButton = binding.showDeadlineCalendarButton
         showDeadlineCalendarButton.setOnClickListener {
             showCalendarDialog("Deadline")
         }
 
-        val showStartCalendarButton = view.findViewById<Button>(R.id.showStartCalendarButton)
+        val showStartCalendarButton = binding.showStartCalendarButton
         showStartCalendarButton.setOnClickListener {
             showCalendarDialog("Start")
         }
 
-        val showStartTimeButton = view.findViewById<Button>(R.id.showStartTimeButton)
+        val showStartTimeButton = binding.showStartTimeButton
         showStartTimeButton.setOnClickListener {
             showTimePicker()
         }
 
-        val showDeadlineTimeButton = view.findViewById<Button>(R.id.showDeadlineTimeButton)
+        val showDeadlineTimeButton = binding.showDeadlineTimeButton
         showDeadlineTimeButton.setOnClickListener {
             showTimePicker()
         }
