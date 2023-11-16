@@ -9,7 +9,14 @@
         android:id="@+id/addDeadlineFragment"
         android:name="com.example.deadline.fragment.AddDeadlineFragment"
         android:label="AddDeadlineFragment"
-        tools:layout="@layout/add_deadline_fragment" />
+        tools:layout="@layout/add_deadline_fragment" >
+        <action
+            android:id="@+id/action_addDeadlineFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+        <action
+            android:id="@+id/action_addDeadlineFragment_to_calendarDialogFragment"
+            app:destination="@id/calendarDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/deadlineRecycleViewFragment"
         android:name="com.example.deadline.fragment.DeadlineRecycleViewFragment"
@@ -19,4 +26,15 @@
             android:id="@+id/action_deadlineRecycleViewFragment_to_addDeadlineFragment"
             app:destination="@id/addDeadlineFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.deadline.fragment.NotificationFragment"
+        android:label="NotificationFragment"
+        tools:layout="@layout/notification_fragment" />
+    <fragment
+        android:id="@+id/calendarDialogFragment"
+        android:name="com.example.deadline.fragment.CalendarDialogFragment"
+        android:label="CalendarDialogFragment"
+        tools:layout="@layout/dialog_calendar"
+        />
 </navigation>
