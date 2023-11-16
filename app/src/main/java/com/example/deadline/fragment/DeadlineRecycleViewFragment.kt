@@ -55,7 +55,6 @@ class DeadlineRecycleViewFragment : Fragment() {
 //            deadlineAdapter.submitList(viewModel.fullDeadline())
 //        }
 
-        val binding = FragmentDeadlineListRecyclerViewBinding.bind(view)
         binding.addDeadlineButton.setOnClickListener {
             navigateToAddDeadlineFragment()
         }
