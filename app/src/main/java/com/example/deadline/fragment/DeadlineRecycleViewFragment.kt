@@ -71,18 +71,7 @@ class DeadlineRecycleViewFragment : Fragment() {
 
         binding.addDeadlineButton.setOnClickListener {
             Log.d("DeadlineRecycleViewFragment", "addDeadlineButton clicked")
-//            navigateToAddDeadlineFragment()
-            val deadlineInstance = Deadline(
-                title = "test thread database",
-                start = "0",
-                deadline = "0",
-                color = "red",
-                notification = "12",
-                state = DeadlineState.DONE.toString(),
-            )
-            CoroutineScope(Dispatchers.IO).launch {
-                insertDeadlineIntoDatabase(deadlineInstance)
-            }
+            navigateToAddDeadlineFragment()
         }
     }
 
@@ -96,14 +85,4 @@ class DeadlineRecycleViewFragment : Fragment() {
             DeadlineRecycleViewFragmentDirections.actionDeadlineRecycleViewFragmentToAddDeadlineFragment()
         findNavController().navigate(action)
     }
-
-    private fun insertDeadlineIntoDatabase(deadline: Deadline) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val database = AppDatabase.getDatabase(requireContext())
-            val deadlineDao = database.deadlineDao()
-
-            deadlineDao.insertDeadline(deadline)
-        }
-    }
-
 }
