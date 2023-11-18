@@ -10,7 +10,7 @@ import java.util.Date
 @Entity
 @TypeConverters(Converters::class)
 data class Deadline (
-    @PrimaryKey val id: Int,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val title: String,
     val start: String,
     val deadline: String,
