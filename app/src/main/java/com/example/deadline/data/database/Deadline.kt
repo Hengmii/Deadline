@@ -13,7 +13,9 @@ data class Deadline (
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val title: String,
     val start: String,
+    val startTime: String,
     val deadline: String,
+    val deadlineTime: String,
     val color: String,
     val notification: String,
     val state: String
