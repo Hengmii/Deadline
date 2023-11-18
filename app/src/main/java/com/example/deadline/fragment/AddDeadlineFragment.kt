@@ -1,5 +1,6 @@
 package com.example.deadline.fragment
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -12,9 +13,17 @@ import android.widget.CalendarView
 import androidx.compose.ui.res.dimensionResource
 import androidx.fragment.app.Fragment
 import com.example.deadline.R
+import com.example.deadline.data.DeadlineState
+import com.example.deadline.data.database.AppDatabase
+import com.example.deadline.data.database.Deadline
 import com.example.deadline.databinding.AddDeadlineFragmentBinding
 import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class AddDeadlineFragment : Fragment() {
 
@@ -53,6 +62,22 @@ class AddDeadlineFragment : Fragment() {
             showTimePicker()
         }
 
+        val confirmAddDeadlineButton = binding.confirmAddDeadlineButton
+
+        confirmAddDeadlineButton.setOnClickListener {
+//            val deadlineTitle = binding.deadlineNameInput.text.toString()
+
+            val deadlineInstance = Deadline(
+                title = "test 1",
+                start = "0",
+                deadline = "0",
+                color = "red",
+                notification = "12",
+                state = DeadlineState.DONE.toString(),
+            )
+            insertDeadlineIntoDatabase(deadlineInstance)
+        }
+
 //        val addNotificationButton = view.findViewById<Button>(R.id.add_notification_button)
 //        addNotificationButton.setOnClickListener {
 //            showNotificationDialog()
@@ -66,8 +91,12 @@ class AddDeadlineFragment : Fragment() {
 
         val timePickerDialog =
             TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
+                val selectedTime = Calendar.getInstance().apply {
+                    set(Calendar.HOUR_OF_DAY, selectedHour)
+                    set(Calendar.MINUTE, selectedMinute)
+                }
+                val selectedTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(selectedTime.time)
             }, hour, minute, true)
-
         timePickerDialog.show()
     }
 
@@ -89,4 +118,11 @@ class AddDeadlineFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("SuspiciousIndentation")
+    private fun insertDeadlineIntoDatabase(deadline: Deadline) {
+        val database = AppDatabase.getDatabase(requireContext())
+        val deadlineDao = database.deadlineDao()
+
+            deadlineDao.insertDeadline(deadline)
+    }
 }

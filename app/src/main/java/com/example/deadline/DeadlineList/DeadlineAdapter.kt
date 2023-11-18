@@ -37,13 +37,11 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: DeadlineViewHolder, position: Int) {
-        holder.bind(Deadline(0, "test", "0", "0", "red", "12", "COMPLETE"))
-//        holder.bind(getItem(position))
+        holder.bind(getItem(position))
     }
 
     override fun getItemCount(): Int {
-//        return currentList.size
-        return 1
+        return currentList.size
     }
 
 
