@@ -7,9 +7,9 @@
     android:showDividers="middle">
 
     <TableLayout
-        android:layout_width="409dp"
-        android:layout_height="653dp"
-        android:layout_marginTop="0dp"
+        android:id="@+id/tableLayout"
+        android:layout_width="406dp"
+        android:layout_height="321dp"
         app:layout_constraintTop_toBottomOf="@+id/new_deadline_text_view"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="1dp">
@@ -138,6 +138,17 @@
             android:layout_height="1dp"
             android:background="#000000" />
     </TableLayout>
+
+    <Button
+        android:id="@+id/confirm_add_deadline_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
     <TextView
         android:id="@+id/new_deadline_text_view"
