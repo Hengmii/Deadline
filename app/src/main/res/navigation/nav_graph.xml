@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_addDeadlineFragment_to_calendarDialogFragment"
             app:destination="@id/calendarDialogFragment" />
+        <action
+            android:id="@+id/action_addDeadlineFragment_to_deadlineRecycleViewFragment"
+            app:destination="@id/deadlineRecycleViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/deadlineRecycleViewFragment"
