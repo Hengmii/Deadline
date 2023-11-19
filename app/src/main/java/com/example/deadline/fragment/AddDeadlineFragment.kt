@@ -1,6 +1,5 @@
 package com.example.deadline.fragment
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -8,28 +7,44 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.CalendarView
-import androidx.compose.ui.res.dimensionResource
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.deadline.R
 import com.example.deadline.data.DeadlineState
 import com.example.deadline.data.database.AppDatabase
 import com.example.deadline.data.database.Deadline
 import com.example.deadline.databinding.AddDeadlineFragmentBinding
-import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
+import com.example.deadline.viewmodels.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.navigation.fragment.findNavController
 
 class AddDeadlineFragment : Fragment() {
 
     private var _binding: AddDeadlineFragmentBinding? = null
 
     private val binding get() = _binding!!
+
+    private val sharedViewModel: SharedViewModel by viewModels()
+
+    private var selectedDeadlineDate: Long? = null
+
+    private var selectedStartDate: Long? = null
+
+    private var selectedStartTime: Long? = null
+
+    private var selectedDeadlineTime: Long? = null
+
+    private var selectedColor: String? = null
+
+    private var selectedNotification: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +56,36 @@ class AddDeadlineFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel.selectedDeadlineDate.observe(viewLifecycleOwner) { date ->
+            Log.d("AddDeadlineFragment", "Selected Deadline Date123: ${date}")
+            selectedDeadlineDate = date
+        }
+
+        sharedViewModel.selectedStartDate.observe(viewLifecycleOwner) { date ->
+            Log.d("AddDeadlineFragment", "Selected Start Date124: ${date}")
+            selectedStartDate = date
+        }
+
+        sharedViewModel.selectedStartTime.observe(viewLifecycleOwner) { time ->
+            Log.d("AddDeadlineFragment", "Selected Start Time: ${time}")
+            selectedStartTime = time
+        }
+
+        sharedViewModel.selectedDeadlineTime.observe(viewLifecycleOwner) { time ->
+            Log.d("AddDeadlineFragment", "Selected Deadline Time: ${time}")
+            selectedDeadlineTime = time
+        }
+
+        sharedViewModel.selectedColor.observe(viewLifecycleOwner) { color ->
+            Log.d("AddDeadlineFragment", "Selected Color: ${color}")
+            selectedColor = color
+        }
+
+        sharedViewModel.selectedNotification.observe(viewLifecycleOwner) { notification ->
+            Log.d("AddDeadlineFragment", "Selected Notification: ${notification}")
+            selectedNotification = notification
+        }
 
         val showDeadlineCalendarButton = binding.showDeadlineCalendarButton
         showDeadlineCalendarButton.setOnClickListener {
@@ -54,37 +99,43 @@ class AddDeadlineFragment : Fragment() {
 
         val showStartTimeButton = binding.showStartTimeButton
         showStartTimeButton.setOnClickListener {
-            showTimePicker()
+            showTimePicker("Start")
         }
 
         val showDeadlineTimeButton = binding.showDeadlineTimeButton
         showDeadlineTimeButton.setOnClickListener {
-            showTimePicker()
-        }
-
-        val confirmAddDeadlineButton = binding.confirmAddDeadlineButton
-
-        confirmAddDeadlineButton.setOnClickListener {
-//            val deadlineTitle = binding.deadlineNameInput.text.toString()
-
-            val deadlineInstance = Deadline(
-                title = "test 1",
-                start = "0",
-                deadline = "0",
-                color = "red",
-                notification = "12",
-                state = DeadlineState.DONE.toString(),
-            )
-            insertDeadlineIntoDatabase(deadlineInstance)
+            showTimePicker("Deadline")
         }
 
 //        val addNotificationButton = view.findViewById<Button>(R.id.add_notification_button)
 //        addNotificationButton.setOnClickListener {
 //            showNotificationDialog()
 //        }
+
+        val confirmAddDeadlineButton = binding.confirmAddDeadlineButton
+
+        confirmAddDeadlineButton.setOnClickListener {
+            val deadlineTitle = binding.deadlineNameInput.text.toString()
+
+            val deadlineInstance = Deadline(
+                title = deadlineTitle,
+                start = selectedStartDate.toString(),
+                startTime = selectedStartTime.toString(),
+                deadline = selectedDeadlineDate.toString(),
+                deadlineTime = selectedDeadlineTime.toString(),
+                color = selectedColor.toString(),
+                notification = selectedNotification.toString(),
+                state = DeadlineState.TODO.toString(),
+            )
+            Log.d("AddDeadlineFragment", "Deadline Instance: ${deadlineInstance}")
+            CoroutineScope(Dispatchers.IO).launch {
+                insertDeadlineIntoDatabase(deadlineInstance)
+            }
+            navigateToDeadlineRecycleViewFragment()
+        }
     }
 
-    private fun showTimePicker() {
+    private fun showTimePicker(timeType: String) {
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
         val minute = calendar.get(Calendar.MINUTE)
@@ -95,7 +146,19 @@ class AddDeadlineFragment : Fragment() {
                     set(Calendar.HOUR_OF_DAY, selectedHour)
                     set(Calendar.MINUTE, selectedMinute)
                 }
-                val selectedTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(selectedTime.time)
+                if (timeType == "Start") {
+                    sharedViewModel.selectedStartTime.value = selectedTime.timeInMillis
+                    binding.showStartTimeButton.text = SimpleDateFormat(
+                        "HH:mm",
+                        Locale.getDefault()
+                    ).format(selectedTime.timeInMillis)
+                } else {
+                    sharedViewModel.selectedDeadlineTime.value = selectedTime.timeInMillis
+                    binding.showDeadlineTimeButton.text = SimpleDateFormat(
+                        "HH:mm",
+                        Locale.getDefault()
+                    ).format(selectedTime.timeInMillis)
+                }
             }, hour, minute, true)
         timePickerDialog.show()
     }
@@ -110,7 +173,19 @@ class AddDeadlineFragment : Fragment() {
             .setTitle("Select ${calenderType} Date")
             .setPositiveButton("OK") { dialog, which ->
                 val selectedDate = calendarView.date
-                Log.d("CalendarDialogFragment", "Selected Date: ${selectedDate}")
+                if (calenderType == "Deadline") {
+                    sharedViewModel.selectedDeadlineDate.value = selectedDate
+                    binding.showDeadlineCalendarButton.text = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate)
+                } else {
+                    sharedViewModel.selectedStartDate.value = selectedDate
+                    binding.showStartCalendarButton.text = SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate)
+                }
             }
             .setNegativeButton("Cancel", null)
             .create()
@@ -118,11 +193,18 @@ class AddDeadlineFragment : Fragment() {
         dialog.show()
     }
 
-    @SuppressLint("SuspiciousIndentation")
     private fun insertDeadlineIntoDatabase(deadline: Deadline) {
-        val database = AppDatabase.getDatabase(requireContext())
-        val deadlineDao = database.deadlineDao()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val database = AppDatabase.getDatabase(requireContext())
+            val deadlineDao = database.deadlineDao()
 
             deadlineDao.insertDeadline(deadline)
+        }
+    }
+
+    private fun navigateToDeadlineRecycleViewFragment() {
+        val action =
+            AddDeadlineFragmentDirections.actionAddDeadlineFragmentToDeadlineRecycleViewFragment()
+        findNavController().navigate(action)
     }
 }
