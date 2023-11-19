@@ -12,8 +12,12 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(deadline: Deadline) {
             binding.deadlineTitle.text = deadline.title
-            // TODO: set time left
-            binding.deadlineTimeLeft.text = deadline.deadline.toString()
+            try {
+                binding.deadlineTimeLeft.text = (deadline.deadline.toLong() - deadline.start.toLong()).toString()
+            } catch (e: Exception) {
+                binding.deadlineTimeLeft.text = "0"
+            }
+
 //            binding.deadlineProgressBar.setProgressColor(deadline.color.toArgb())
 //            binding.deadlineProgressBar.setProgress(deadline.progress)
         }
