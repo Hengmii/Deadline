@@ -33,7 +33,11 @@
         android:id="@+id/notificationFragment"
         android:name="com.example.deadline.fragment.NotificationFragment"
         android:label="NotificationFragment"
-        tools:layout="@layout/notification_fragment" />
+        tools:layout="@layout/notification_fragment" >
+        <action
+            android:id="@+id/action_notificationFragment_to_addDeadlineFragment"
+            app:destination="@id/addDeadlineFragment" />
+    </fragment>
     <fragment
         android:id="@+id/calendarDialogFragment"
         android:name="com.example.deadline.fragment.CalendarDialogFragment"
