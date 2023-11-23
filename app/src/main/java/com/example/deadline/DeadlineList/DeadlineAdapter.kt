@@ -1,3 +1,5 @@
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -5,15 +7,51 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deadline.data.database.Deadline
 import com.example.deadline.databinding.DeadlineItemBinding
+import java.util.concurrent.TimeUnit
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.ExperimentalTime
 
 class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
     ListAdapter<Deadline, DeadlineAdapter.DeadlineViewHolder>(DiffCallback) {
     class DeadlineViewHolder(private val binding: DeadlineItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
+        @ExperimentalTime
         fun bind(deadline: Deadline) {
             binding.deadlineTitle.text = deadline.title
             try {
-                binding.deadlineTimeLeft.text = (deadline.deadline.toLong() - deadline.start.toLong()).toString()
+                var duration = deadline.deadline.toLong() - deadline.start.toLong()
+                Log.d("DeadlineAdapter", deadline.deadline)
+                Log.d("DeadlineAdapter", deadline.start)
+                Log.d("DeadlineAdapter", duration.toString())
+
+                val days = TimeUnit.MILLISECONDS.toDays(duration)
+                duration -= TimeUnit.DAYS.toMillis(days)
+
+                val hours = TimeUnit.MILLISECONDS.toHours(duration)
+                duration -= TimeUnit.HOURS.toMillis(hours)
+
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
+                duration -= TimeUnit.MINUTES.toMillis(minutes)
+
+                Log.d("DeadlineAdapter", "$days days, $hours hours, $minutes minutes")
+                if (days > 0)
+                {
+                    binding.deadlineTimeLeft.text = "$days days, $hours hours, $minutes minutes"
+                }
+                else if (hours > 0)
+                {
+                    binding.deadlineTimeLeft.text = "$hours hours, $minutes minutes"
+                }
+                else if (minutes > 0)
+                {
+                    binding.deadlineTimeLeft.text = "$minutes minutes"
+                }
+                else
+                {
+                    binding.deadlineTimeLeft.text = "The deadline has passed"
+                }
             } catch (e: Exception) {
                 binding.deadlineTimeLeft.text = "0"
             }
@@ -40,6 +78,7 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
         return viewHolder
     }
 
+    @OptIn(ExperimentalTime::class)
     override fun onBindViewHolder(holder: DeadlineViewHolder, position: Int) {
         holder.bind(getItem(position))
     }

@@ -107,10 +107,12 @@ class AddDeadlineFragment : Fragment() {
             showTimePicker("Deadline")
         }
 
-//        val addNotificationButton = view.findViewById<Button>(R.id.add_notification_button)
-//        addNotificationButton.setOnClickListener {
-//            showNotificationDialog()
-//        }
+        val addNotificationButton = binding.addNotificationButton
+        addNotificationButton.setOnClickListener {
+            val action =
+                AddDeadlineFragmentDirections.actionAddDeadlineFragmentToNotificationFragment()
+            findNavController().navigate(action)
+        }
 
         val confirmAddDeadlineButton = binding.confirmAddDeadlineButton
 
@@ -175,10 +177,15 @@ class AddDeadlineFragment : Fragment() {
                 val selectedDate = calendarView.date
                 if (calenderType == "Deadline") {
                     sharedViewModel.selectedDeadlineDate.value = selectedDate
+                    Log.d("AddDeadlineFragment", "Selected Deadline Date: ${selectedDate}")
                     binding.showDeadlineCalendarButton.text = SimpleDateFormat(
                         "dd/MM/yyyy",
                         Locale.getDefault()
                     ).format(selectedDate)
+                   Log.d(SimpleDateFormat(
+                        "dd/MM/yyyy",
+                        Locale.getDefault()
+                    ).format(selectedDate), "Selected Deadline Date: ${selectedDate}")
                 } else {
                     sharedViewModel.selectedStartDate.value = selectedDate
                     binding.showStartCalendarButton.text = SimpleDateFormat(
