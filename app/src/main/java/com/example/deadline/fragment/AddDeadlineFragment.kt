@@ -169,6 +169,14 @@ class AddDeadlineFragment : Fragment() {
     private fun showCalendarDialog(calenderType: String) {
         val calendarViewLayout = layoutInflater.inflate(R.layout.dialog_calendar, null)
         val calendarView = calendarViewLayout.findViewById<CalendarView>(R.id.calendarView)
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val selectedDate = Calendar.getInstance().apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
+            calendarView.date = selectedDate.timeInMillis
+        }
 
         val dialog = AlertDialog.Builder(requireContext())
             .setView(calendarViewLayout)
