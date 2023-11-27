@@ -6,17 +6,18 @@
     android:layout_height="match_parent"
     android:showDividers="middle">
 
-    <TableLayout
+    <LinearLayout
         android:id="@+id/tableLayout"
-        android:layout_width="406dp"
-        android:layout_height="321dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/new_deadline_text_view"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="1dp">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp">
 
@@ -25,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:background="@null"
                 android:hint="Name"
                 android:textColorHint="#F0F0F0"
@@ -33,24 +35,29 @@
 
                 <requestFocus />
             </EditText>
-        </TableRow>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000" />
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp">
 
             <TextView
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:text="Start" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"></View>
 
             <Button
                 android:id="@+id/showStartCalendarButton"
@@ -63,25 +70,32 @@
                 android:id="@+id/showStartTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
                 android:text="Show Time" />
 
-        </TableRow>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000" />
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp">
 
             <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:text="Deadline" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"></View>
 
             <Button
                 android:id="@+id/showDeadlineCalendarButton"
@@ -94,50 +108,61 @@
                 android:id="@+id/showDeadlineTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
+                android:layout_marginEnd="12dp"
                 android:text="Show Time" />
-        </TableRow>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000" />
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingTop="16dp"
             android:paddingBottom="16dp">
 
             <TextView
-                android:layout_width="55dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_weight="1"
                 android:text="Color" />
+
+            <View
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/color_circle"></View>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"></View>
 
 
             <TextView
-                android:layout_width="169dp"
-                android:layout_height="19dp"
-                android:layout_marginStart="36dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Notifications" />
 
             <Button
                 android:id="@+id/add_notification_button"
-                android:layout_width="35dp"
+                android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="36dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginEnd="24dp"
                 android:background="@drawable/ic_add_black_24dp" />
+        </LinearLayout>
 
-        </TableRow>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#000000" />
-    </TableLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/confirm_add_deadline_button"
@@ -146,7 +171,7 @@
         android:layout_marginTop="40dp"
         android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
