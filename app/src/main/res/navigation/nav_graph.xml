@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_addDeadlineFragment_to_deadlineRecycleViewFragment"
             app:destination="@id/deadlineRecycleViewFragment" />
+        <action
+            android:id="@+id/action_addDeadlineFragment_to_selectColorFragment"
+            app:destination="@id/selectColorFragment" />
     </fragment>
     <fragment
         android:id="@+id/deadlineRecycleViewFragment"
@@ -44,4 +47,13 @@
         android:label="CalendarDialogFragment"
         tools:layout="@layout/dialog_calendar"
         />
+    <fragment
+        android:id="@+id/selectColorFragment"
+        android:name="com.example.deadline.fragment.SelectColorFragment"
+        android:label="SelectColorFragment"
+        tools:layout="@layout/select_color_fragment" >
+        <action
+            android:id="@+id/action_selectColorFragment_to_addDeadlineFragment"
+            app:destination="@id/addDeadlineFragment" />
+    </fragment>
 </navigation>

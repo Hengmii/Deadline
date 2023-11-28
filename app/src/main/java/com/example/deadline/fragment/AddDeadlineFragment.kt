@@ -135,6 +135,13 @@ class AddDeadlineFragment : Fragment() {
             }
             navigateToDeadlineRecycleViewFragment()
         }
+
+        val previewSelectedColorButton = binding.previewSelectedColor
+        previewSelectedColorButton.setOnClickListener() {
+            val action =
+                AddDeadlineFragmentDirections.actionAddDeadlineFragmentToSelectColorFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun showTimePicker(timeType: String) {

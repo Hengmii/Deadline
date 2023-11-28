@@ -131,6 +131,7 @@
                 android:text="Color" />
 
             <View
+                android:id="@+id/preview_selected_color"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
