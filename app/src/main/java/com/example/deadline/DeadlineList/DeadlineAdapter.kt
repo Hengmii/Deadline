@@ -1,12 +1,17 @@
 import android.annotation.SuppressLint
+import android.graphics.Color
+import android.graphics.Outline
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deadline.data.database.Deadline
 import com.example.deadline.databinding.DeadlineItemBinding
+import java.lang.IllegalArgumentException
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -20,11 +25,14 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
         @ExperimentalTime
         fun bind(deadline: Deadline) {
             binding.deadlineTitle.text = deadline.title
+            binding.root.clipToOutline = true
+            binding.root.outlineProvider = object : ViewOutlineProvider() {
+                override fun getOutline(view: View, outline: Outline) {
+                    outline.setRoundRect(0, 0, view.width, view.height, 16f)
+                }
+            }
             try {
-                var duration = deadline.deadline.toLong() - deadline.start.toLong()
-                Log.d("DeadlineAdapter", deadline.deadline)
-                Log.d("DeadlineAdapter", deadline.start)
-                Log.d("DeadlineAdapter", duration.toString())
+                var duration = deadline.deadline.toLong() - System.currentTimeMillis()
 
                 val days = TimeUnit.MILLISECONDS.toDays(duration)
                 duration -= TimeUnit.DAYS.toMillis(days)
@@ -36,27 +44,23 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
                 duration -= TimeUnit.MINUTES.toMillis(minutes)
 
                 Log.d("DeadlineAdapter", "$days days, $hours hours, $minutes minutes")
-                if (days > 0)
-                {
+                if (days > 0) {
                     binding.deadlineTimeLeft.text = "$days days, $hours hours, $minutes minutes"
-                }
-                else if (hours > 0)
-                {
+                } else if (hours > 0) {
                     binding.deadlineTimeLeft.text = "$hours hours, $minutes minutes"
-                }
-                else if (minutes > 0)
-                {
+                } else if (minutes > 0) {
                     binding.deadlineTimeLeft.text = "$minutes minutes"
-                }
-                else
-                {
+                } else {
                     binding.deadlineTimeLeft.text = "The deadline has passed"
                 }
+                val color = Color.parseColor(deadline.color)
+                binding.deadlineProgressBar.setProgressColor(color)
             } catch (e: Exception) {
                 binding.deadlineTimeLeft.text = "0"
+            } catch (e: IllegalArgumentException) {
+                binding.deadlineProgressBar.setBackgroundColor(Color.GRAY)
             }
 
-//            binding.deadlineProgressBar.setProgressColor(deadline.color.toArgb())
 //            binding.deadlineProgressBar.setProgress(deadline.progress)
         }
     }
