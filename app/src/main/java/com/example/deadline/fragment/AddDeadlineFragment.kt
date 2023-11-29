@@ -118,6 +118,7 @@ class AddDeadlineFragment : Fragment() {
 
         confirmAddDeadlineButton.setOnClickListener {
             if (!checkDataValidity()) {
+            }
             val deadlineTitle = binding.deadlineNameInput.text.toString()
 
             val deadlineInstance = Deadline(
