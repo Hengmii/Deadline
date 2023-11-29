@@ -34,7 +34,7 @@ class NotificationFragment : Fragment() {
 
         val recyclerView = binding.notificationRecyclerView
         val adapter = NotificationAdapter {}.apply {
-            submitList(NotificationTime.values().toList())
+            submitList(NotificationTime.values().toList().sortedByDescending { it.offset })
         }
         recyclerView.adapter = adapter
     }
