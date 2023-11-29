@@ -261,6 +261,6 @@ class AddDeadlineFragment : Fragment() {
     }
 
     private fun checkDataValidity(): Boolean {
-        return selectedStartDate != null && selectedStartTime != null && selectedDeadlineDate != null && selectedDeadlineTime != null && selectedColor != null
+        return selectedStartDate != null && selectedStartTime != null && selectedDeadlineDate != null && selectedDeadlineTime != null && binding.deadlineNameInput.text.toString() != ""
     }
 }
