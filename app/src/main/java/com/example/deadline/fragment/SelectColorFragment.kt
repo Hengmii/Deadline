@@ -3,11 +3,15 @@ package com.example.deadline.fragment
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.deadline.databinding.SelectColorFragmentBinding
+import com.example.deadline.viewmodels.ColorViewModel
 
 class SelectColorFragment : Fragment() {
     private var _binding: SelectColorFragmentBinding? = null
@@ -16,11 +20,18 @@ class SelectColorFragment : Fragment() {
 
     private var selectedColor = ""
 
+    private lateinit var colorViewModel: ColorViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = SelectColorFragmentBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        colorViewModel = ViewModelProvider(requireActivity()).get(ColorViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -35,7 +46,7 @@ class SelectColorFragment : Fragment() {
         val lightGreenCircle = binding.lightGreenCircle
         val yellowCircle = binding.yellowCircle
 
-        var defaultColorMap = mapOf(
+        val defaultColorMap = mapOf(
             "#88CCC7" to aquamarineCircle,
             "#719DE5" to blueCircle,
             "#7CB58F" to greenCircle,
@@ -57,6 +68,13 @@ class SelectColorFragment : Fragment() {
                 circleDrawable.setColor(Color.parseColor(selectedColor))
                 selectedColorView.background = circleDrawable
             }
+        }
+
+        val saveButton = binding.confirmSelectColorButton
+        saveButton.setOnClickListener() {
+            colorViewModel.setSelectedColor(selectedColor)
+            val action = SelectColorFragmentDirections.actionSelectColorFragmentToAddDeadlineFragment()
+            findNavController().navigate(action)
         }
     }
 }

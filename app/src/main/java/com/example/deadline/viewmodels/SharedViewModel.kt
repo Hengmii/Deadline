@@ -12,7 +12,5 @@ class SharedViewModel : ViewModel() {
 
     val selectedDeadlineTime = MutableLiveData<Long>()
 
-    val selectedColor = MutableLiveData<String>()
-
     val selectedNotification = MutableLiveData<String>()
 }

@@ -8,11 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.deadline.DeadlineList.DeadlineProgressBar
 import com.example.deadline.ProjectDeadlineApplication
 import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
+import com.example.deadline.viewmodels.ColorViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
 
@@ -57,7 +60,6 @@ class DeadlineRecycleViewFragment : Fragment() {
         viewModel.fullDeadlines.observe(viewLifecycleOwner) {
             deadlineAdapter.submitList(it)
         }
-
         binding.addDeadlineButton.setOnClickListener {
             Log.d("DeadlineRecycleViewFragment", "addDeadlineButton clicked")
             navigateToAddDeadlineFragment()

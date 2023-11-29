@@ -2,15 +2,20 @@ package com.example.deadline.fragment
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
+import androidx.compose.ui.res.colorResource
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.deadline.R
 import com.example.deadline.data.DeadlineState
@@ -25,6 +30,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import androidx.navigation.fragment.findNavController
+import com.example.deadline.viewmodels.ColorViewModel
 
 class AddDeadlineFragment : Fragment() {
 
@@ -33,6 +39,8 @@ class AddDeadlineFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val sharedViewModel: SharedViewModel by viewModels()
+
+    private lateinit var colorViewModel: ColorViewModel
 
     private var selectedDeadlineDate: Long? = null
 
@@ -52,6 +60,15 @@ class AddDeadlineFragment : Fragment() {
     ): View? {
         _binding = AddDeadlineFragmentBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        colorViewModel = ViewModelProvider(requireActivity()).get(ColorViewModel::class.java)
+
+        colorViewModel.selectedColor.observe(this, Observer { color ->
+            selectedColor = color
+        })
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -75,11 +92,6 @@ class AddDeadlineFragment : Fragment() {
         sharedViewModel.selectedDeadlineTime.observe(viewLifecycleOwner) { time ->
             Log.d("AddDeadlineFragment", "Selected Deadline Time: ${time}")
             selectedDeadlineTime = time
-        }
-
-        sharedViewModel.selectedColor.observe(viewLifecycleOwner) { color ->
-            Log.d("AddDeadlineFragment", "Selected Color: ${color}")
-            selectedColor = color
         }
 
         sharedViewModel.selectedNotification.observe(viewLifecycleOwner) { notification ->
@@ -118,6 +130,13 @@ class AddDeadlineFragment : Fragment() {
 
         confirmAddDeadlineButton.setOnClickListener {
             if (!checkDataValidity()) {
+                val dialog = AlertDialog.Builder(requireContext())
+                    .setTitle("Error")
+                    .setMessage("Please fill in all the fields")
+                    .setPositiveButton("OK", null)
+                    .create()
+                dialog.show()
+                return@setOnClickListener
             }
             val deadlineTitle = binding.deadlineNameInput.text.toString()
 
@@ -139,6 +158,15 @@ class AddDeadlineFragment : Fragment() {
         }
 
         val previewSelectedColorButton = binding.previewSelectedColor
+        val circleDrawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setSize(120, 120)
+        }
+        colorViewModel.selectedColor.observe(viewLifecycleOwner) { color ->
+            circleDrawable.setColor(Color.parseColor(color))
+            previewSelectedColorButton.background = circleDrawable
+        }
+
         previewSelectedColorButton.setOnClickListener() {
             val action =
                 AddDeadlineFragmentDirections.actionAddDeadlineFragmentToSelectColorFragment()
