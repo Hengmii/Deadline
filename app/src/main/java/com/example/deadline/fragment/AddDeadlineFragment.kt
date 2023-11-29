@@ -117,6 +117,7 @@ class AddDeadlineFragment : Fragment() {
         val confirmAddDeadlineButton = binding.confirmAddDeadlineButton
 
         confirmAddDeadlineButton.setOnClickListener {
+            if (!checkDataValidity()) {
             val deadlineTitle = binding.deadlineNameInput.text.toString()
 
             val deadlineInstance = Deadline(
@@ -228,5 +229,9 @@ class AddDeadlineFragment : Fragment() {
         val action =
             AddDeadlineFragmentDirections.actionAddDeadlineFragmentToDeadlineRecycleViewFragment()
         findNavController().navigate(action)
+    }
+
+    private fun checkDataValidity(): Boolean {
+        return selectedStartDate != null && selectedStartTime != null && selectedDeadlineDate != null && selectedDeadlineTime != null && selectedColor != null
     }
 }
