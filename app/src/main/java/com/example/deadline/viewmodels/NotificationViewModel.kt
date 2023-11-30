@@ -17,12 +17,12 @@ class NotificationViewModel : ViewModel() {
         _clickedNotifications.value = emptyList()
     }
 
-    fun incrementNotificationCounter() {
+    private fun incrementNotificationCounter() {
         val currentValue = _notificationCounter.value ?: 0
         _notificationCounter.value = currentValue + 1
     }
 
-    fun decrementNotificationCounter() {
+    private fun decrementNotificationCounter() {
         val currentValue = _notificationCounter.value ?: 0
         if (currentValue > 0) {
             _notificationCounter.value = currentValue - 1
