@@ -16,7 +16,7 @@ class NotificationAdapter(
     private val onItemClicked: (NotificationTime) -> Unit
 ) :
     ListAdapter<NotificationTime, NotificationAdapter.NotificationViewHolder>(DiffCallback) {
-    class NotificationViewHolder(private val binding: NotificaitonItemBinding) :
+    inner class NotificationViewHolder(private val binding: NotificaitonItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             notification: NotificationTime,
@@ -25,9 +25,20 @@ class NotificationAdapter(
         ) {
             binding.notificationTime.text = notification.displayText
 
+            updateUIBasedOnClickedState(notification)
+
             itemView.setOnClickListener {
+                notification.toggleClicked()
+                viewModel.updateClickedNotification(notification)
+                notifyItemChanged(adapterPosition)
                 onItemClicked(notification)
-                viewModel.incrementNotificationCounter()
+            }
+        }
+        private fun updateUIBasedOnClickedState(notification: NotificationTime) {
+            if (notification.isClicked) {
+                binding.addNotificationButton.setBackgroundResource(R.drawable.ic_checkmark)
+            } else {
+                binding.addNotificationButton.setBackgroundResource(R.drawable.ic_add_black_24dp)
             }
         }
     }
@@ -70,7 +81,7 @@ class NotificationAdapter(
                 oldItem: NotificationTime,
                 newItem: NotificationTime
             ): Boolean {
-                return oldItem == newItem
+                return oldItem == newItem && oldItem.isClicked == newItem.isClicked
             }
         }
     }
