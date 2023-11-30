@@ -43,7 +43,6 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
                 val minutes = TimeUnit.MILLISECONDS.toMinutes(duration)
                 duration -= TimeUnit.MINUTES.toMillis(minutes)
 
-                Log.d("DeadlineAdapter", "$days days, $hours hours, $minutes minutes")
                 if (days > 0) {
                     binding.deadlineTimeLeft.text = "$days days, $hours hours, $minutes minutes"
                 } else if (hours > 0) {
