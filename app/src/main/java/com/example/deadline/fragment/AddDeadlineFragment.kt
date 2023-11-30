@@ -50,7 +50,7 @@ class AddDeadlineFragment : Fragment() {
 
     private var selectedDeadlineTime: Long? = null
 
-    private var selectedColor: String? = "#FF0000"
+    private var selectedColor: String? = "#666666"
 
     private var selectedNotification: String? = null
 
