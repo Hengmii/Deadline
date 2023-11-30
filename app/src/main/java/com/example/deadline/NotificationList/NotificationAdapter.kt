@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.deadline.R
 import com.example.deadline.data.NotificationTime
 import com.example.deadline.databinding.NotificaitonItemBinding
 import com.example.deadline.viewmodels.NotificationViewModel
@@ -17,8 +18,17 @@ class NotificationAdapter(
     ListAdapter<NotificationTime, NotificationAdapter.NotificationViewHolder>(DiffCallback) {
     class NotificationViewHolder(private val binding: NotificaitonItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(notification: NotificationTime) {
+        fun bind(
+            notification: NotificationTime,
+            onItemClicked: (NotificationTime) -> Unit,
+            viewModel: NotificationViewModel
+        ) {
             binding.notificationTime.text = notification.displayText
+
+            itemView.setOnClickListener {
+                onItemClicked(notification)
+                viewModel.incrementNotificationCounter()
+            }
         }
     }
 
@@ -35,19 +45,13 @@ class NotificationAdapter(
             if (position != RecyclerView.NO_POSITION) {
                 onItemClicked(getItem(position))
             }
-            notificationViewModel.incrementNotificationCounter()
-            Log.d(
-                "NotificationAdapter",
-                "Notification counter: ${notificationViewModel.notificationCounter.value}"
-            )
         }
         return viewHolder
     }
 
     override fun onBindViewHolder(holder: NotificationViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClicked, notificationViewModel)
     }
-
 
     override fun getItemCount(): Int {
         return currentList.size
