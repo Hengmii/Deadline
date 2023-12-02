@@ -65,6 +65,7 @@ class AddDeadlineFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         colorViewModel = ViewModelProvider(requireActivity()).get(ColorViewModel::class.java)
+        colorViewModel.selectedColor.value = "#666666"
 
         colorViewModel.selectedColor.observe(this, Observer { color ->
             selectedColor = color
@@ -77,21 +78,37 @@ class AddDeadlineFragment : Fragment() {
         sharedViewModel.selectedDeadlineDate.observe(viewLifecycleOwner) { date ->
             Log.d("AddDeadlineFragment", "Selected Deadline Date123: ${date}")
             selectedDeadlineDate = date
+            binding.showDeadlineCalendarButton.text = SimpleDateFormat(
+                "dd/MM/yyyy",
+                Locale.getDefault()
+            ).format(selectedDeadlineDate)
         }
 
         sharedViewModel.selectedStartDate.observe(viewLifecycleOwner) { date ->
             Log.d("AddDeadlineFragment", "Selected Start Date124: ${date}")
             selectedStartDate = date
+            binding.showStartCalendarButton.text = SimpleDateFormat(
+                "dd/MM/yyyy",
+                Locale.getDefault()
+            ).format(selectedStartDate)
         }
 
         sharedViewModel.selectedStartTime.observe(viewLifecycleOwner) { time ->
             Log.d("AddDeadlineFragment", "Selected Start Time: ${time}")
             selectedStartTime = time
+            binding.showStartTimeButton.text = SimpleDateFormat(
+                "HH:mm",
+                Locale.getDefault()
+            ).format(selectedStartTime)
         }
 
         sharedViewModel.selectedDeadlineTime.observe(viewLifecycleOwner) { time ->
             Log.d("AddDeadlineFragment", "Selected Deadline Time: ${time}")
             selectedDeadlineTime = time
+            binding.showDeadlineTimeButton.text = SimpleDateFormat(
+                "HH:mm",
+                Locale.getDefault()
+            ).format(selectedDeadlineTime)
         }
 
         sharedViewModel.selectedNotification.observe(viewLifecycleOwner) { notification ->
@@ -187,16 +204,8 @@ class AddDeadlineFragment : Fragment() {
                 }
                 if (timeType == "Start") {
                     sharedViewModel.selectedStartTime.value = selectedTime.timeInMillis
-                    binding.showStartTimeButton.text = SimpleDateFormat(
-                        "HH:mm",
-                        Locale.getDefault()
-                    ).format(selectedTime.timeInMillis)
                 } else {
                     sharedViewModel.selectedDeadlineTime.value = selectedTime.timeInMillis
-                    binding.showDeadlineTimeButton.text = SimpleDateFormat(
-                        "HH:mm",
-                        Locale.getDefault()
-                    ).format(selectedTime.timeInMillis)
                 }
             }, hour, minute, true)
         timePickerDialog.show()
@@ -223,20 +232,12 @@ class AddDeadlineFragment : Fragment() {
                 if (calenderType == "Deadline") {
                     sharedViewModel.selectedDeadlineDate.value = selectedDate
                     Log.d("AddDeadlineFragment", "Selected Deadline Date: ${selectedDate}")
-                    binding.showDeadlineCalendarButton.text = SimpleDateFormat(
-                        "dd/MM/yyyy",
-                        Locale.getDefault()
-                    ).format(selectedDate)
                    Log.d(SimpleDateFormat(
                         "dd/MM/yyyy",
                         Locale.getDefault()
                     ).format(selectedDate), "Selected Deadline Date: ${selectedDate}")
                 } else {
                     sharedViewModel.selectedStartDate.value = selectedDate
-                    binding.showStartCalendarButton.text = SimpleDateFormat(
-                        "dd/MM/yyyy",
-                        Locale.getDefault()
-                    ).format(selectedDate)
                 }
             }
             .setNegativeButton("Cancel", null)
