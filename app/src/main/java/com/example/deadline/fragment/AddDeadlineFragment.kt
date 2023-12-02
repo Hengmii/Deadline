@@ -255,9 +255,7 @@ class AddDeadlineFragment : Fragment() {
     }
 
     private fun navigateToDeadlineRecycleViewFragment() {
-        val action =
-            AddDeadlineFragmentDirections.actionAddDeadlineFragmentToDeadlineRecycleViewFragment()
-        findNavController().navigate(action)
+        findNavController().popBackStack()
     }
 
     private fun checkDataValidity(): Boolean {

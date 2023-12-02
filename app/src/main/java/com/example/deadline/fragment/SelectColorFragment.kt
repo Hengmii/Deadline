@@ -73,8 +73,7 @@ class SelectColorFragment : Fragment() {
         val saveButton = binding.confirmSelectColorButton
         saveButton.setOnClickListener() {
             colorViewModel.setSelectedColor(selectedColor)
-            val action = SelectColorFragmentDirections.actionSelectColorFragmentToAddDeadlineFragment()
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         }
     }
 }

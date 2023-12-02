@@ -32,14 +32,13 @@ class NotificationFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val confirmAddNotification = binding.confirmAddNotificationButton
         confirmAddNotification.setOnClickListener {
-            val action =
-                NotificationFragmentDirections.actionNotificationFragmentToAddDeadlineFragment()
-            findNavController().navigate(action)
+            findNavController().popBackStack()
         }
 
         val recyclerView = binding.notificationRecyclerView
