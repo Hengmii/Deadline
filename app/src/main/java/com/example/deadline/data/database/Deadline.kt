@@ -15,5 +15,5 @@ data class Deadline (
     val deadlineTime: String,
     val color: String,
     val notification: String,
-    val state: String
+    var state: String
 )

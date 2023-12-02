@@ -16,10 +16,12 @@ import kotlin.time.ExperimentalTime
 
 class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
     ListAdapter<Deadline, DeadlineAdapter.DeadlineViewHolder>(DiffCallback) {
-    class DeadlineViewHolder(private val binding: DeadlineItemBinding) :
+    var currentPressedPosition: Int? = null
+    inner class DeadlineViewHolder(private val binding: DeadlineItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnCreateContextMenuListener { menu, v, menuInfo ->
+                currentPressedPosition = adapterPosition
                 menu.add(0, 1, 0, "Show in full")
                 menu.add(0, 2, 0, "Complete")
                 menu.add(0, 3, 0, "Edit")
@@ -98,6 +100,10 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
 
     override fun getItemCount(): Int {
         return currentList.size
+    }
+
+    fun getDeadlineAtPosition(position: Int): Deadline {
+        return getItem(position)
     }
 
 

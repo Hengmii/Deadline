@@ -7,4 +7,9 @@ import com.example.deadline.data.database.DeadlineDao
 
 class ProjectDeadlineViewModel(private val deadlineDao: DeadlineDao) : ViewModel() {
     val fullDeadlines : LiveData<List<Deadline>> = deadlineDao.getAll()
+
+
+    fun updateDeadlineState(id: Int?, state: String) {
+        deadlineDao.updateDeadlineState(id, state)
+    }
 }

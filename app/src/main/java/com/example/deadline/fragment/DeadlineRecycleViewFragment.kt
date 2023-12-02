@@ -3,7 +3,9 @@ package com.example.deadline.fragment
 import DeadlineAdapter
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextMenu
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -14,10 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deadline.DeadlineList.DeadlineProgressBar
 import com.example.deadline.ProjectDeadlineApplication
+import com.example.deadline.R
+import com.example.deadline.data.DeadlineState
 import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
 import com.example.deadline.viewmodels.ColorViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
+import java.util.concurrent.Executors
 
 class DeadlineRecycleViewFragment : Fragment() {
 
@@ -26,6 +31,8 @@ class DeadlineRecycleViewFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var recyclerView: RecyclerView
+
+    private lateinit var deadlineAdapter: DeadlineAdapter
 
     private val viewModel: ProjectDeadlineViewModel by viewModels {
         ProjectDeadlineViewModelFactory(
@@ -49,8 +56,7 @@ class DeadlineRecycleViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        val deadlineAdapter = DeadlineAdapter({
-//            val action = DeadlineRecycleViewFragmentDirections.actionDeadlineRecycleViewFragmentToDeadlineDetailFragment(it)
+        deadlineAdapter = DeadlineAdapter({
         })
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -75,5 +81,25 @@ class DeadlineRecycleViewFragment : Fragment() {
         val action =
             DeadlineRecycleViewFragmentDirections.actionDeadlineRecycleViewFragmentToAddDeadlineFragment()
         findNavController().navigate(action)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val position = deadlineAdapter.currentPressedPosition ?: return super.onContextItemSelected(item)
+        val deadline = deadlineAdapter.getDeadlineAtPosition(position)
+        when (item.itemId) {
+            1 -> {
+                Log.d("DeadlineRecycleViewFragment", "Show in full")
+
+            }
+            2 -> {
+                val executor = Executors.newSingleThreadExecutor()
+                executor.execute {
+                    viewModel.updateDeadlineState(deadline.id, DeadlineState.DONE.toString())
+                }
+            }
+            else -> return super.onContextItemSelected(item)
+        }
+
+        return true
     }
 }
