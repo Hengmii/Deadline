@@ -1,40 +1,38 @@
 package com.example.deadline.NotificationList
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deadline.R
-import com.example.deadline.data.NotificationTime
+import com.example.deadline.data.Notification
 import com.example.deadline.databinding.NotificaitonItemBinding
 import com.example.deadline.viewmodels.NotificationViewModel
 
 class NotificationAdapter(
     private val notificationViewModel: NotificationViewModel,
-    private val onItemClicked: (NotificationTime) -> Unit
+    private val onItemClicked: (Notification) -> Unit
 ) :
-    ListAdapter<NotificationTime, NotificationAdapter.NotificationViewHolder>(DiffCallback) {
+    ListAdapter<Notification, NotificationAdapter.NotificationViewHolder>(DiffCallback) {
     inner class NotificationViewHolder(private val binding: NotificaitonItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            notification: NotificationTime,
-            onItemClicked: (NotificationTime) -> Unit,
+            notification: Notification,
+            onItemClicked: (Notification) -> Unit,
             viewModel: NotificationViewModel
         ) {
-            binding.notificationTime.text = notification.displayText
+            binding.notificationTime.text = notification.notificationTime.displayText
 
             updateUIBasedOnClickedState(notification)
 
             itemView.setOnClickListener {
-                notification.toggleClicked()
-                viewModel.updateClickedNotification(notification)
+                viewModel.onClickNotification(notification)
                 notifyItemChanged(adapterPosition)
                 onItemClicked(notification)
             }
         }
-        private fun updateUIBasedOnClickedState(notification: NotificationTime) {
+        private fun updateUIBasedOnClickedState(notification: Notification) {
             if (notification.isClicked) {
                 binding.addNotificationButton.setBackgroundResource(R.drawable.ic_checkmark)
             } else {
@@ -51,12 +49,6 @@ class NotificationAdapter(
                 false
             )
         )
-        viewHolder.itemView.setOnClickListener {
-            val position = viewHolder.adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                onItemClicked(getItem(position))
-            }
-        }
         return viewHolder
     }
 
@@ -69,19 +61,19 @@ class NotificationAdapter(
     }
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<NotificationTime>() {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Notification>() {
             override fun areItemsTheSame(
-                oldItem: NotificationTime,
-                newItem: NotificationTime
+                oldItem: Notification,
+                newItem: Notification
             ): Boolean {
                 return oldItem == newItem
             }
 
             override fun areContentsTheSame(
-                oldItem: NotificationTime,
-                newItem: NotificationTime
+                oldItem: Notification,
+                newItem: Notification
             ): Boolean {
-                return oldItem == newItem && oldItem.isClicked == newItem.isClicked
+                return oldItem.notificationTime == newItem.notificationTime && oldItem.isClicked == newItem.isClicked
             }
         }
     }

@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import java.time.Duration
 import java.time.LocalDateTime
 
-enum class NotificationTime(val displayText: String, val offset: Duration, var isClicked: Boolean = false) {
+enum class NotificationTime(val displayText: String, val offset: Duration) {
     @RequiresApi(Build.VERSION_CODES.O)
     AT_DEADLINE("At time of deadline", Duration.ZERO),
 
@@ -53,7 +53,4 @@ enum class NotificationTime(val displayText: String, val offset: Duration, var i
         return deadline.minus(offset)
     }
 
-    fun toggleClicked() {
-        isClicked = !isClicked
-    }
 }
