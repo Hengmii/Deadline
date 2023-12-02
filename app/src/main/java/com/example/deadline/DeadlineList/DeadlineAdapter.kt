@@ -1,7 +1,6 @@
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Outline
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,20 @@ import com.example.deadline.data.database.Deadline
 import com.example.deadline.databinding.DeadlineItemBinding
 import java.lang.IllegalArgumentException
 import java.util.concurrent.TimeUnit
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
 
 class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
     ListAdapter<Deadline, DeadlineAdapter.DeadlineViewHolder>(DiffCallback) {
     class DeadlineViewHolder(private val binding: DeadlineItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            itemView.setOnCreateContextMenuListener { menu, v, menuInfo ->
+                menu.add(0, 1, 0, "Show in full")
+                menu.add(0, 2, 0, "Complete")
+                menu.add(0, 3, 0, "Edit")
+                menu.add(0, 4, 0, "Pin")
+            }
+        }
         @SuppressLint("SetTextI18n")
         @ExperimentalTime
         fun bind(deadline: Deadline) {
@@ -84,6 +89,11 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
     @OptIn(ExperimentalTime::class)
     override fun onBindViewHolder(holder: DeadlineViewHolder, position: Int) {
         holder.bind(getItem(position))
+
+        holder.itemView.setOnClickListener{
+            holder.itemView.showContextMenu()
+            true
+        }
     }
 
     override fun getItemCount(): Int {
