@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.deadline.R
-import com.example.deadline.data.Notification
 import com.example.deadline.databinding.NotificaitonItemBinding
 import com.example.deadline.viewmodels.NotificationViewModel
 
