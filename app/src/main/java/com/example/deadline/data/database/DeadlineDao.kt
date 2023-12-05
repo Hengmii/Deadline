@@ -16,4 +16,7 @@ interface DeadlineDao {
     @Query("UPDATE deadline SET state = :state WHERE id = :id")
     fun updateDeadlineState(id: Int?, state: String)
 
+    @Query("UPDATE deadline SET title = :title, start = :start, startTime = :startTime, deadline = :deadline, deadlineTime = :deadlineTime, color = :color, notification = :notification WHERE id = :id")
+    fun updateDeadline(id: Int?, title: String, start: String, startTime: String, deadline: String, deadlineTime: String, color: String, notification: String)
+
 }

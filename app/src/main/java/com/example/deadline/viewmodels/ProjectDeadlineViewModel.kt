@@ -12,4 +12,8 @@ class ProjectDeadlineViewModel(private val deadlineDao: DeadlineDao) : ViewModel
     fun updateDeadlineState(id: Int?, state: String) {
         deadlineDao.updateDeadlineState(id, state)
     }
+
+    fun updateDeadline(id: Int?, title: String, start: String, startTime: String, deadline :String, deadlineTime: String, color: String, notification: String) {
+        deadlineDao.updateDeadline(id, title, start, startTime, deadline, deadlineTime, color, notification)
+    }
 }

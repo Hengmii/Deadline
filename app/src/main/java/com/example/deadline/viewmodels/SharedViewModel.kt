@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class SharedViewModel : ViewModel() {
+    var deadlineTitle = MutableLiveData<String>()
+
     val selectedDeadlineDate = MutableLiveData<Long>()
 
     val selectedStartDate = MutableLiveData<Long>()
@@ -12,5 +14,9 @@ class SharedViewModel : ViewModel() {
 
     val selectedDeadlineTime = MutableLiveData<Long>()
 
-    val selectedNotification = MutableLiveData<String>()
+    val selectedNotifications = MutableLiveData<List<String>>()
+
+    var selectedColor = MutableLiveData<String>()
+
+    var selectedDeadlineState = MutableLiveData<String>()
 }

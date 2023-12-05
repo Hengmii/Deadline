@@ -22,6 +22,7 @@ import com.example.deadline.NotificationList.NotificationAdapter
 import com.example.deadline.data.NotificationTime
 import com.example.deadline.databinding.NotificationFragmentBinding
 import com.example.deadline.viewmodels.NotificationViewModel
+import com.example.deadline.viewmodels.SharedViewModel
 import java.time.LocalDateTime
 
 
@@ -31,6 +32,8 @@ class NotificationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var notificationViewModel: NotificationViewModel
+
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -46,6 +49,7 @@ class NotificationFragment : Fragment() {
         val confirmAddNotification = binding.confirmAddNotificationButton
         confirmAddNotification.setOnClickListener {
             findNavController().popBackStack()
+            sharedViewModel.selectedNotifications.value = notificationViewModel.selectedNotifications.value?.map { it.toString() }
         }
 
         val recyclerView = binding.notificationRecyclerView
@@ -53,17 +57,19 @@ class NotificationFragment : Fragment() {
         notificationViewModel =
             ViewModelProvider(requireActivity()).get(NotificationViewModel::class.java)
 
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
         val adapter = NotificationAdapter(notificationViewModel) {}.apply {
-            submitList(notificationViewModel.allNotifications)
+            submitList(notificationViewModel.allNotifications.value)
         }
         recyclerView.adapter = adapter
 
-//        notificationViewModel.clickedNotifications.observe(viewLifecycleOwner, Observer { notifications ->
-//            adapter.submitList(notifications.toList())
-//        })
-
         notificationViewModel.notificationCounter.observe(viewLifecycleOwner, Observer { counter ->
             binding.notificationCount.text = "(${counter})"
+        })
+
+        notificationViewModel.selectedNotifications.observe(viewLifecycleOwner, Observer { notifications ->
+            adapter.notifyDataSetChanged()
         })
 
         scheduleNotification(NotificationTime.AT_DEADLINE, LocalDateTime.now())
@@ -106,11 +112,11 @@ class NotificationFragment : Fragment() {
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
 
-                 ActivityCompat.requestPermissions(
-                     requireActivity(),
-                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                     1
-                 )
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    1
+                )
 
                 return
             }

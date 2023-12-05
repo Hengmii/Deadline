@@ -10,10 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
-import androidx.compose.ui.res.colorResource
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +27,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import androidx.navigation.fragment.findNavController
-import com.example.deadline.viewmodels.ColorViewModel
 
 class AddDeadlineFragment : Fragment() {
 
@@ -38,21 +34,7 @@ class AddDeadlineFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val sharedViewModel: SharedViewModel by viewModels()
-
-    private lateinit var colorViewModel: ColorViewModel
-
-    private var selectedDeadlineDate: Long? = null
-
-    private var selectedStartDate: Long? = null
-
-    private var selectedStartTime: Long? = null
-
-    private var selectedDeadlineTime: Long? = null
-
-    private var selectedColor: String? = "#666666"
-
-    private var selectedNotification: String? = null
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,12 +46,14 @@ class AddDeadlineFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        colorViewModel = ViewModelProvider(requireActivity()).get(ColorViewModel::class.java)
-        colorViewModel.selectedColor.value = "#666666"
-
-        colorViewModel.selectedColor.observe(this, Observer { color ->
-            selectedColor = color
-        })
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel.deadlineTitle.value = ""
+        sharedViewModel.selectedStartTime.value = Calendar.getInstance().timeInMillis
+        sharedViewModel.selectedStartDate.value = Calendar.getInstance().timeInMillis
+        sharedViewModel.selectedDeadlineTime.value = Calendar.getInstance().timeInMillis
+        sharedViewModel.selectedDeadlineDate.value = Calendar.getInstance().timeInMillis + 86400000
+        sharedViewModel.selectedNotifications.value = mutableListOf()
+        sharedViewModel.selectedColor.value = "#666666"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -77,43 +61,38 @@ class AddDeadlineFragment : Fragment() {
 
         sharedViewModel.selectedDeadlineDate.observe(viewLifecycleOwner) { date ->
             Log.d("AddDeadlineFragment", "Selected Deadline Date123: ${date}")
-            selectedDeadlineDate = date
             binding.showDeadlineCalendarButton.text = SimpleDateFormat(
                 "dd/MM/yyyy",
                 Locale.getDefault()
-            ).format(selectedDeadlineDate)
+            ).format(date)
         }
 
         sharedViewModel.selectedStartDate.observe(viewLifecycleOwner) { date ->
             Log.d("AddDeadlineFragment", "Selected Start Date124: ${date}")
-            selectedStartDate = date
             binding.showStartCalendarButton.text = SimpleDateFormat(
                 "dd/MM/yyyy",
                 Locale.getDefault()
-            ).format(selectedStartDate)
+            ).format(date)
         }
 
         sharedViewModel.selectedStartTime.observe(viewLifecycleOwner) { time ->
             Log.d("AddDeadlineFragment", "Selected Start Time: ${time}")
-            selectedStartTime = time
             binding.showStartTimeButton.text = SimpleDateFormat(
                 "HH:mm",
                 Locale.getDefault()
-            ).format(selectedStartTime)
+            ).format(time)
         }
 
         sharedViewModel.selectedDeadlineTime.observe(viewLifecycleOwner) { time ->
             Log.d("AddDeadlineFragment", "Selected Deadline Time: ${time}")
-            selectedDeadlineTime = time
             binding.showDeadlineTimeButton.text = SimpleDateFormat(
                 "HH:mm",
                 Locale.getDefault()
-            ).format(selectedDeadlineTime)
+            ).format(time)
         }
 
-        sharedViewModel.selectedNotification.observe(viewLifecycleOwner) { notification ->
+        sharedViewModel.selectedNotifications.observe(viewLifecycleOwner) { notification ->
             Log.d("AddDeadlineFragment", "Selected Notification: ${notification}")
-            selectedNotification = notification
         }
 
         val showDeadlineCalendarButton = binding.showDeadlineCalendarButton
@@ -155,19 +134,19 @@ class AddDeadlineFragment : Fragment() {
                 dialog.show()
                 return@setOnClickListener
             }
-            val deadlineTitle = binding.deadlineNameInput.text.toString()
+            sharedViewModel.deadlineTitle.value = binding.deadlineNameInput.text.toString()
+            sharedViewModel.selectedDeadlineState.value = DeadlineState.TODO.toString()
 
             val deadlineInstance = Deadline(
-                title = deadlineTitle,
-                start = selectedStartDate.toString(),
-                startTime = selectedStartTime.toString(),
-                deadline = selectedDeadlineDate.toString(),
-                deadlineTime = selectedDeadlineTime.toString(),
-                color = selectedColor.toString(),
-                notification = selectedNotification.toString(),
-                state = DeadlineState.TODO.toString(),
+                title = sharedViewModel.deadlineTitle.value.toString(),
+                start = sharedViewModel.selectedStartDate.value.toString(),
+                startTime = sharedViewModel.selectedStartTime.value.toString(),
+                deadline = sharedViewModel.selectedDeadlineDate.value.toString(),
+                deadlineTime = sharedViewModel.selectedDeadlineTime.value.toString(),
+                color = sharedViewModel.selectedColor.value.toString(),
+                notification = sharedViewModel.selectedNotifications.value?.joinToString(",") ?: "",
+                state = sharedViewModel.selectedDeadlineState.value.toString()
             )
-            Log.d("AddDeadlineFragment", "Deadline Instance: ${deadlineInstance}")
             CoroutineScope(Dispatchers.IO).launch {
                 insertDeadlineIntoDatabase(deadlineInstance)
             }
@@ -179,7 +158,7 @@ class AddDeadlineFragment : Fragment() {
             shape = GradientDrawable.OVAL
             setSize(120, 120)
         }
-        colorViewModel.selectedColor.observe(viewLifecycleOwner) { color ->
+        sharedViewModel.selectedColor.observe(viewLifecycleOwner) { color ->
             circleDrawable.setColor(Color.parseColor(color))
             previewSelectedColorButton.background = circleDrawable
         }
@@ -232,10 +211,12 @@ class AddDeadlineFragment : Fragment() {
                 if (calenderType == "Deadline") {
                     sharedViewModel.selectedDeadlineDate.value = selectedDate
                     Log.d("AddDeadlineFragment", "Selected Deadline Date: ${selectedDate}")
-                   Log.d(SimpleDateFormat(
-                        "dd/MM/yyyy",
-                        Locale.getDefault()
-                    ).format(selectedDate), "Selected Deadline Date: ${selectedDate}")
+                    Log.d(
+                        SimpleDateFormat(
+                            "dd/MM/yyyy",
+                            Locale.getDefault()
+                        ).format(selectedDate), "Selected Deadline Date: ${selectedDate}"
+                    )
                 } else {
                     sharedViewModel.selectedStartDate.value = selectedDate
                 }
@@ -260,6 +241,10 @@ class AddDeadlineFragment : Fragment() {
     }
 
     private fun checkDataValidity(): Boolean {
-        return selectedStartDate != null && selectedStartTime != null && selectedDeadlineDate != null && selectedDeadlineTime != null && binding.deadlineNameInput.text.toString() != ""
+        return sharedViewModel.selectedStartDate != null &&
+                sharedViewModel.selectedStartTime != null &&
+                sharedViewModel.selectedDeadlineDate != null &&
+                sharedViewModel.selectedDeadlineTime != null &&
+                binding.deadlineNameInput.text.toString() != ""
     }
 }
