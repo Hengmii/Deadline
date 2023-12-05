@@ -137,6 +137,35 @@ class AddDeadlineFragment : Fragment() {
             sharedViewModel.deadlineTitle.value = binding.deadlineNameInput.text.toString()
             sharedViewModel.selectedDeadlineState.value = DeadlineState.TODO.toString()
 
+            // get hour, and minute from sharedViewModel.selectedDeadlineTime
+            // get date from sharedViewModel.selectedDeadlineDate
+            // merge them together to a new date
+            // set the new date to sharedViewModel.selectedDeadlineTime and sharedViewModel.selectedDeadlineDate
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = sharedViewModel.selectedDeadlineTime.value ?: 0
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+            val date = Calendar.getInstance().apply {
+                timeInMillis = sharedViewModel.selectedDeadlineDate.value ?: 0
+                set(Calendar.HOUR_OF_DAY, hour)
+                set(Calendar.MINUTE, minute)
+            }
+            sharedViewModel.selectedDeadlineTime.value = date.timeInMillis
+            sharedViewModel.selectedDeadlineDate.value = date.timeInMillis
+
+            // same to start time
+            val calendar2 = Calendar.getInstance()
+            calendar2.timeInMillis = sharedViewModel.selectedStartTime.value ?: 0
+            val hour2 = calendar2.get(Calendar.HOUR_OF_DAY)
+            val minute2 = calendar2.get(Calendar.MINUTE)
+            val date2 = Calendar.getInstance().apply {
+                timeInMillis = sharedViewModel.selectedStartDate.value ?: 0
+                set(Calendar.HOUR_OF_DAY, hour2)
+                set(Calendar.MINUTE, minute2)
+            }
+            sharedViewModel.selectedStartTime.value = date2.timeInMillis
+            sharedViewModel.selectedStartDate.value = date2.timeInMillis
+
             val deadlineInstance = Deadline(
                 title = sharedViewModel.deadlineTitle.value.toString(),
                 start = sharedViewModel.selectedStartDate.value.toString(),
@@ -177,14 +206,22 @@ class AddDeadlineFragment : Fragment() {
 
         val timePickerDialog =
             TimePickerDialog(requireContext(), { _, selectedHour, selectedMinute ->
-                val selectedTime = Calendar.getInstance().apply {
-                    set(Calendar.HOUR_OF_DAY, selectedHour)
-                    set(Calendar.MINUTE, selectedMinute)
-                }
+
+
                 if (timeType == "Start") {
-                    sharedViewModel.selectedStartTime.value = selectedTime.timeInMillis
+                    val date = Calendar.getInstance().apply {
+                        timeInMillis = sharedViewModel.selectedStartDate.value ?: 0
+                        set(Calendar.HOUR_OF_DAY, selectedHour)
+                        set(Calendar.MINUTE, selectedMinute)
+                    }
+                    sharedViewModel.selectedStartTime.value = date.timeInMillis
                 } else {
-                    sharedViewModel.selectedDeadlineTime.value = selectedTime.timeInMillis
+                    val date = Calendar.getInstance().apply {
+                        timeInMillis = sharedViewModel.selectedDeadlineDate.value ?: 0
+                        set(Calendar.HOUR_OF_DAY, selectedHour)
+                        set(Calendar.MINUTE, selectedMinute)
+                    }
+                    sharedViewModel.selectedDeadlineTime.value = date.timeInMillis
                 }
             }, hour, minute, true)
         timePickerDialog.show()

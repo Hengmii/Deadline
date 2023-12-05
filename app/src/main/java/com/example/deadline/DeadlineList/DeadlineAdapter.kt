@@ -1,6 +1,8 @@
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Outline
+import android.icu.util.Calendar
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +40,7 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
                 }
             }
             try {
-                var duration = deadline.deadline.toLong() - System.currentTimeMillis()
+                var duration = deadline.deadlineTime.toLong() - System.currentTimeMillis()
 
                 val days = TimeUnit.MILLISECONDS.toDays(duration)
                 duration -= TimeUnit.DAYS.toMillis(days)
