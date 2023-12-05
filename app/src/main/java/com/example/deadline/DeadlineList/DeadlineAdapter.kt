@@ -10,6 +10,7 @@ import android.view.ViewOutlineProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.deadline.DeadlineList.DeadlineProgressBar
 import com.example.deadline.data.database.Deadline
 import com.example.deadline.databinding.DeadlineItemBinding
 import java.lang.IllegalArgumentException
@@ -41,6 +42,10 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
             }
             try {
                 var duration = deadline.deadlineTime.toLong() - System.currentTimeMillis()
+                val wholeDuration = deadline.deadlineTime.toLong() - deadline.startTime.toLong()
+                val progress = 1 - (duration.toFloat() / wholeDuration.toFloat())
+
+                binding.deadlineProgressBar.setProgress(progress)
 
                 val days = TimeUnit.MILLISECONDS.toDays(duration)
                 duration -= TimeUnit.DAYS.toMillis(days)
