@@ -12,15 +12,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.deadline.databinding.SelectColorFragmentBinding
 import com.example.deadline.viewmodels.ColorViewModel
+import com.example.deadline.viewmodels.SharedViewModel
 
 class SelectColorFragment : Fragment() {
     private var _binding: SelectColorFragmentBinding? = null
 
     private val binding get() = _binding!!
 
-    private var selectedColor = ""
+    private var selectedColor = "#666666"
 
     private lateinit var colorViewModel: ColorViewModel
+
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -32,6 +35,7 @@ class SelectColorFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         colorViewModel = ViewModelProvider(requireActivity()).get(ColorViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,6 +78,7 @@ class SelectColorFragment : Fragment() {
         saveButton.setOnClickListener() {
             colorViewModel.setSelectedColor(selectedColor)
             findNavController().popBackStack()
+            sharedViewModel.selectedColor.value = selectedColor
         }
     }
 }
