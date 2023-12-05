@@ -25,7 +25,6 @@ class DeadlineAdapter(private val onItemClicked: (Deadline) -> Unit) :
                 menu.add(0, 1, 0, "Show in full")
                 menu.add(0, 2, 0, "Complete")
                 menu.add(0, 3, 0, "Edit")
-                menu.add(0, 4, 0, "Pin")
             }
         }
         @SuppressLint("SetTextI18n")
