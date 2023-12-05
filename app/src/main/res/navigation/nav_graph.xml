@@ -28,6 +28,13 @@
         <action
             android:id="@+id/action_deadlineRecycleViewFragment_to_addDeadlineFragment"
             app:destination="@id/addDeadlineFragment" />
+        <action
+            android:id="@+id/action_deadlineRecycleViewFragment_to_editDeadlineFragment"
+            app:destination="@id/editDeadlineFragment" >
+            <argument
+                android:name="deadline"
+                app:argType="com.example.deadline.data.database.Deadline" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -46,5 +53,23 @@
         android:name="com.example.deadline.fragment.SelectColorFragment"
         android:label="SelectColorFragment"
         tools:layout="@layout/select_color_fragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/editDeadlineFragment"
+        android:name="com.example.deadline.fragment.EditDeadlineFragment"
+        android:label="EditDeadlineFragment"
+        tools:layout="@layout/edit_deadline_fragment">
+        <argument
+            android:name="deadline"
+            app:argType="com.example.deadline.data.database.Deadline" />
+        <action
+            android:id="@+id/action_editDeadlineFragment_to_selectColorFragment"
+            app:destination="@id/selectColorFragment" />
+        <action
+            android:id="@+id/action_editDeadlineFragment_to_calendarDialogFragment"
+            app:destination="@id/calendarDialogFragment" />
+        <action
+            android:id="@+id/action_editDeadlineFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
     </fragment>
 </navigation>
