@@ -97,6 +97,11 @@ class DeadlineRecycleViewFragment : Fragment() {
                     viewModel.updateDeadlineState(deadline.id, DeadlineState.DONE.toString())
                 }
             }
+            3-> {
+                val action =
+                    DeadlineRecycleViewFragmentDirections.actionDeadlineRecycleViewFragmentToEditDeadlineFragment(deadline)
+                findNavController().navigate(action)
+            }
             else -> return super.onContextItemSelected(item)
         }
 
