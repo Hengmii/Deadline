@@ -61,6 +61,9 @@ class EditDeadlineFragment : Fragment() {
         val notifications = deadline.notification.split(",")
         val notificationTimes = mutableListOf<NotificationTime>()
         for (notification in notifications) {
+            if (notification == "") {
+                continue
+            }
             notificationTimes.add(NotificationTime.valueOf(notification))
         }
         sharedViewModel.selectedNotifications.value = notificationTimes.map { it.toString() }

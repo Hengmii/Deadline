@@ -128,7 +128,7 @@ class AddDeadlineFragment : Fragment() {
             if (!checkDataValidity()) {
                 val dialog = AlertDialog.Builder(requireContext())
                     .setTitle("Error")
-                    .setMessage("Please fill in all the fields")
+                    .setMessage("Please fill in all the fields, and make sure the deadline is after the start time.")
                     .setPositiveButton("OK", null)
                     .create()
                 dialog.show()
@@ -282,6 +282,7 @@ class AddDeadlineFragment : Fragment() {
                 sharedViewModel.selectedStartTime != null &&
                 sharedViewModel.selectedDeadlineDate != null &&
                 sharedViewModel.selectedDeadlineTime != null &&
-                binding.deadlineNameInput.text.toString() != ""
+                binding.deadlineNameInput.text.toString() != "" &&
+                sharedViewModel.selectedDeadlineTime.value!! > sharedViewModel.selectedStartTime.value!!
     }
 }
