@@ -33,7 +33,10 @@ class DeadlineProgressBar @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val startX = width * progress
-        canvas.drawLine(startX, 0f,  startX, height * 1.0f, paint)
+        val progress = 0.3f
+        val strokeWidth = width * progress
+        val offsetX = strokeWidth / 2
+        paint.strokeWidth = strokeWidth
+        canvas.drawLine(offsetX, 0f,  offsetX, height.toFloat(), paint)
     }
 }
