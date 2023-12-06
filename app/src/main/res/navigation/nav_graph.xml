@@ -35,6 +35,9 @@
                 android:name="deadline"
                 app:argType="com.example.deadline.data.database.Deadline" />
         </action>
+        <action
+            android:id="@+id/action_deadlineRecycleViewFragment_to_detailDeadlineFragment"
+            app:destination="@id/detailDeadlineFragment" />
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
@@ -71,5 +74,17 @@
         <action
             android:id="@+id/action_editDeadlineFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailDeadlineFragment"
+        android:name="com.example.deadline.fragment.DetailDeadlineFragment"
+        android:label="DetailDeadlineFragment"
+        tools:layout="@layout/full_detail_fragment" >
+        <argument
+            android:name="deadline"
+            app:argType="com.example.deadline.data.database.Deadline" />
+        <action
+            android:id="@+id/action_detailDeadlineFragment_to_editDeadlineFragment"
+            app:destination="@id/editDeadlineFragment" />
     </fragment>
 </navigation>

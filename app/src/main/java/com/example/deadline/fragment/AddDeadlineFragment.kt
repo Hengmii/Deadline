@@ -48,10 +48,10 @@ class AddDeadlineFragment : Fragment() {
         super.onCreate(savedInstanceState)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         sharedViewModel.deadlineTitle.value = ""
-        sharedViewModel.selectedStartTime.value = Calendar.getInstance().timeInMillis
         sharedViewModel.selectedStartDate.value = Calendar.getInstance().timeInMillis
-        sharedViewModel.selectedDeadlineTime.value = Calendar.getInstance().timeInMillis
+        sharedViewModel.selectedStartTime.value = Calendar.getInstance().timeInMillis
         sharedViewModel.selectedDeadlineDate.value = Calendar.getInstance().timeInMillis + 86400000
+        sharedViewModel.selectedDeadlineTime.value = Calendar.getInstance().timeInMillis + 86400000
         sharedViewModel.selectedNotifications.value = mutableListOf()
         sharedViewModel.selectedColor.value = "#666666"
     }

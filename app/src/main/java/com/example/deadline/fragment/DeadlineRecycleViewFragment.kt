@@ -88,8 +88,9 @@ class DeadlineRecycleViewFragment : Fragment() {
         val deadline = deadlineAdapter.getDeadlineAtPosition(position)
         when (item.itemId) {
             1 -> {
+                val action = DeadlineRecycleViewFragmentDirections.actionDeadlineRecycleViewFragmentToDetailDeadlineFragment(deadline)
+                findNavController().navigate(action)
                 Log.d("DeadlineRecycleViewFragment", "Show in full")
-
             }
             2 -> {
                 val executor = Executors.newSingleThreadExecutor()
