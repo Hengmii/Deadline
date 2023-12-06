@@ -10,6 +10,12 @@ interface DeadlineDao {
     @Query("SELECT * FROM deadline WHERE state = 'TODO'")
     fun getAll(): LiveData<List<Deadline>>
 
+    @Query("SELECT * FROM deadline WHERE state = 'TODO' limit 4")
+    fun getFour(): List<Deadline>
+
+    @Query("SELECT * FROM deadline WHERE id = :id")
+    fun getDeadline(id: Int?): Deadline
+
     @Insert
     fun insertDeadline(vararg deadlines: Deadline)
 

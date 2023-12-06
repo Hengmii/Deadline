@@ -8,6 +8,9 @@ import com.example.deadline.data.database.DeadlineDao
 class ProjectDeadlineViewModel(private val deadlineDao: DeadlineDao) : ViewModel() {
     val fullDeadlines : LiveData<List<Deadline>> = deadlineDao.getAll()
 
+    fun getDeadline(id: Int?): Deadline {
+        return deadlineDao.getDeadline(id)
+    }
 
     fun updateDeadlineState(id: Int?, state: String) {
         deadlineDao.updateDeadlineState(id, state)

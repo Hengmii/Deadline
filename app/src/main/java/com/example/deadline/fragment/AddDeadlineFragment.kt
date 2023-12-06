@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import androidx.navigation.fragment.findNavController
+import com.example.deadline.viewmodels.NotificationViewModel
 
 class AddDeadlineFragment : Fragment() {
 
@@ -35,6 +36,8 @@ class AddDeadlineFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var notificationViewModel: NotificationViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +57,10 @@ class AddDeadlineFragment : Fragment() {
         sharedViewModel.selectedDeadlineTime.value = Calendar.getInstance().timeInMillis + 86400000
         sharedViewModel.selectedNotifications.value = mutableListOf()
         sharedViewModel.selectedColor.value = "#666666"
+        notificationViewModel =
+            ViewModelProvider(requireActivity()).get(NotificationViewModel::class.java)
+        notificationViewModel.updateStatesFromStringList(
+            emptyList())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
