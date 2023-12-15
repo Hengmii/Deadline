@@ -1,4 +1,4 @@
-package com.example.deadline.fragment
+package com.example.deadline.view.DeadlineDetail
 
 import android.os.Bundle
 import android.os.Handler
@@ -15,11 +15,7 @@ import com.example.deadline.data.database.Deadline
 import com.example.deadline.databinding.FullDetailFragmentBinding
 import com.example.deadline.viewmodels.ProjectDeadlineViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 class DetailDeadlineFragment : Fragment() {
     private var _binding: FullDetailFragmentBinding? = null

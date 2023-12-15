@@ -1,4 +1,4 @@
-package com.example.deadline.NotificationList
+package com.example.deadline.view.NotificationList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

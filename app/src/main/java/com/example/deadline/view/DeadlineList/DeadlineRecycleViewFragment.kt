@@ -1,25 +1,19 @@
-package com.example.deadline.fragment
+package com.example.deadline.view.DeadlineList
 
-import DeadlineAdapter
 import android.os.Bundle
 import android.util.Log
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.deadline.DeadlineList.DeadlineProgressBar
 import com.example.deadline.ProjectDeadlineApplication
-import com.example.deadline.R
 import com.example.deadline.data.DeadlineState
 import com.example.deadline.databinding.FragmentDeadlineListRecyclerViewBinding
-import com.example.deadline.viewmodels.ColorViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModel
 import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
 import java.util.concurrent.Executors

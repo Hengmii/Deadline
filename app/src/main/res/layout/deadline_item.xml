@@ -7,7 +7,7 @@
     android:background="#F0F0F0"
     android:layout_margin="8dp">
 
-    <com.example.deadline.DeadlineList.DeadlineProgressBar
+    <com.example.deadline.view.DeadlineList.DeadlineProgressBar
         android:id="@+id/deadlineProgressBar"
         android:layout_width="0dp"
         android:layout_height="0dp"

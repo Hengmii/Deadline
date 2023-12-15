@@ -1,4 +1,4 @@
-package com.example.deadline.fragment
+package com.example.deadline.view.EditDeadline
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
-import com.example.deadline.NotificationList.Notification
 import com.example.deadline.data.DeadlineState
 import com.example.deadline.data.database.AppDatabase
 import com.example.deadline.data.database.Deadline

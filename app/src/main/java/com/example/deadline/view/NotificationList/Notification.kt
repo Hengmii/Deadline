@@ -1,4 +1,4 @@
-package com.example.deadline.NotificationList
+package com.example.deadline.view.NotificationList
 
 import com.example.deadline.data.NotificationTime
 

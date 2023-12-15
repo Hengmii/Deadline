@@ -7,22 +7,19 @@
 
     <fragment
         android:id="@+id/addDeadlineFragment"
-        android:name="com.example.deadline.fragment.AddDeadlineFragment"
+        android:name="com.example.deadline.view.AddDeadline.AddDeadlineFragment"
         android:label="AddDeadlineFragment"
         tools:layout="@layout/add_deadline_fragment" >
         <action
             android:id="@+id/action_addDeadlineFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
         <action
-            android:id="@+id/action_addDeadlineFragment_to_calendarDialogFragment"
-            app:destination="@id/calendarDialogFragment" />
-        <action
             android:id="@+id/action_addDeadlineFragment_to_selectColorFragment"
             app:destination="@id/selectColorFragment" />
     </fragment>
     <fragment
         android:id="@+id/deadlineRecycleViewFragment"
-        android:name="com.example.deadline.fragment.DeadlineRecycleViewFragment"
+        android:name="com.example.deadline.view.DeadlineList.DeadlineRecycleViewFragment"
         android:label="DeadlineRecycleViewFragment"
         tools:layout="@layout/fragment_deadline_list_recycler_view">
         <action
@@ -41,25 +38,19 @@
     </fragment>
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.example.deadline.fragment.NotificationFragment"
+        android:name="com.example.deadline.view.NotificationList.NotificationFragment"
         android:label="NotificationFragment"
         tools:layout="@layout/notification_fragment" >
     </fragment>
     <fragment
-        android:id="@+id/calendarDialogFragment"
-        android:name="com.example.deadline.fragment.CalendarDialogFragment"
-        android:label="CalendarDialogFragment"
-        tools:layout="@layout/dialog_calendar"
-        />
-    <fragment
         android:id="@+id/selectColorFragment"
-        android:name="com.example.deadline.fragment.SelectColorFragment"
+        android:name="com.example.deadline.view.ColorPicker.SelectColorFragment"
         android:label="SelectColorFragment"
         tools:layout="@layout/select_color_fragment" >
     </fragment>
     <fragment
         android:id="@+id/editDeadlineFragment"
-        android:name="com.example.deadline.fragment.EditDeadlineFragment"
+        android:name="com.example.deadline.view.EditDeadline.EditDeadlineFragment"
         android:label="EditDeadlineFragment"
         tools:layout="@layout/edit_deadline_fragment">
         <argument
@@ -69,15 +60,12 @@
             android:id="@+id/action_editDeadlineFragment_to_selectColorFragment"
             app:destination="@id/selectColorFragment" />
         <action
-            android:id="@+id/action_editDeadlineFragment_to_calendarDialogFragment"
-            app:destination="@id/calendarDialogFragment" />
-        <action
             android:id="@+id/action_editDeadlineFragment_to_notificationFragment"
             app:destination="@id/notificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/detailDeadlineFragment"
-        android:name="com.example.deadline.fragment.DetailDeadlineFragment"
+        android:name="com.example.deadline.view.DeadlineDetail.DetailDeadlineFragment"
         android:label="DetailDeadlineFragment"
         tools:layout="@layout/full_detail_fragment" >
         <argument

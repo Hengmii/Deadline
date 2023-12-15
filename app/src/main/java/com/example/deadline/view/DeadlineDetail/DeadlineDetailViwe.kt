@@ -1,4 +1,4 @@
-package com.example.deadline.fragment
+package com.example.deadline.view.DeadlineDetail
 
 import android.graphics.Color.parseColor
 import androidx.compose.foundation.background
@@ -15,25 +15,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign.Companion.Center
 import androidx.compose.ui.text.style.TextAlign.Companion.End
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.fragment.app.viewModels
-import com.example.deadline.ProjectDeadlineApplication
-import com.example.deadline.data.DeadlineState
 import com.example.deadline.data.database.Deadline
 import com.example.deadline.data.database.deadlineDateTimeString
 import com.example.deadline.data.database.notificationTimes
 import com.example.deadline.data.database.remainDayHourMinuteSecond
 import com.example.deadline.data.database.startDateTimeString
-import com.example.deadline.viewmodels.ProjectDeadlineViewModel
-import com.example.deadline.viewmodels.ProjectDeadlineViewModelFactory
 import kotlinx.coroutines.delay
-import java.util.concurrent.Executors
 
 @Composable
 fun DeadlineDetailView(deadline: Deadline, completeHandler: () -> Unit, backHandler: () -> Unit) {

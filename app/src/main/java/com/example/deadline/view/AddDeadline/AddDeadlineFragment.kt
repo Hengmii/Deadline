@@ -1,4 +1,4 @@
-package com.example.deadline.fragment
+package com.example.deadline.view.AddDeadline
 
 import android.app.AlertDialog
 import android.app.TimePickerDialog
@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CalendarView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.deadline.R
